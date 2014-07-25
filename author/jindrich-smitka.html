@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+        <meta charset="utf-8" />
+        <title>Jindřich Smitka - Jindřich Smitka</title>
+        <link rel="stylesheet" href="http://www.smita.info/theme/css/main.css" />
+        <link href="http://www.smita.info/feeds/all.atom.xml" type="application/atom+xml" rel="alternate" title="Jindřich Smitka Atom Feed" />
+
+        <!--[if IE]>
+            <script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+</head>
+
+<body id="index" class="home">
+        <header id="banner" class="body">
+                <h1><a href="http://www.smita.info/">Jindřich Smitka </a></h1>
+                <nav><ul>
+                    <li><a href="http://www.smita.info/pages/about.html">About Me</a></li>
+                    <li><a href="http://www.smita.info/pages/contact.html">Contact</a></li>
+                    <li><a href="http://www.smita.info/pages/projects.html">Projects</a></li>
+                    <li><a href="http://www.smita.info/category/blog.html">blog</a></li>
+                </ul></nav>
+        </header><!-- /#banner -->
+
+            <aside id="featured" class="body">
+                <article>
+                    <h1 class="entry-title"><a href="http://www.smita.info/blog-za-pomoci-pelicanu.html">Blog za pomoci Pelicanu</a></h1>
+<footer class="post-info">
+        <abbr class="published" title="2012-09-26T00:00:00">
+                Published: 2012-09-26
+        </abbr>
+
+        <address class="vcard author">
+                By                         <a class="url fn" href="http://www.smita.info/author/jindrich-smitka.html">Jindřich Smitka</a>
+        </address>
+<p>In <a href="http://www.smita.info/category/blog.html">blog</a>. </p>
+<p>tags: <a href="http://www.smita.info/tag/blog.html">blog</a> <a href="http://www.smita.info/tag/python.html">python</a> <a href="http://www.smita.info/tag/pelican.html">pelican</a> </p>
+</footer><!-- /.post-info --><p>Dlouho zela moje doména prázdnotou a já psal poznámky různě po papírech, což stačilo do doby, než jsem zapomněl, kde vlastně ty potřebné papíry mám. Proto padlo rozhodnutí, vytvářet poznámky na počítači.</p>
+<p>Rozhodnutí v čem a jak psát bylo těžké, ať už řešení, která dnešní web nabízí nebo vlastní výroba blogu, ale spíše to bylo nalézání slepých uliček.</p>
+<p>Tyto uličky mě dovedly k tomu, co pro tvorbu poznámek požaduji:</p>
+<ul>
+<li>musí běžet na <a href="https://developers.google.com/appengine/">Google App Engine,</a></li>
+<li>musí být nejlépe napsané v <a href="http://www.python.org">Pythonu</a> s podporou pluginů,</li>
+<li>psát na svém notebooku,</li>
+<li>psát ve <a href="http://www.vim.org/">Vimu,</a></li>
+<li>psát <a href="http://daringfireball.net/projects/markdown/">Markdown,</a></li>
+<li>mít blog verzovaný <a href="http://git-scm.com/">Gitem.</a></li>
+</ul>
+<p>Po chvilce hledání na netu jsem narazil na generátor <a href="http://docs.getpelican.com" title="Pelican is a static site generator, written in Python.">Pelican</a>, který splnil mé požadavky.</p>
+<p>Uvádím zde jen nastavení pro Google App Engine, <a href="http://docs.getpelican.com/en/3.0/getting_started.html#installing-pelican">instalaci Pelicanu</a> najdete v jeho dokumentaci.</p>
+<h3>Pelican a Google App Engine</h3>
+<p><em>Pelican</em> mám nastavený tak, aby výstup uložil do adresáře <code>output</code> v kořenu repozitáře. GAE potřebuje vědět, kde má vzít patřičné stránky, proto přidáme pár řádek do <code>app.yaml</code> do sekce <code>handlers.</code></p>
+<div class="highlight"><pre><span class="l-Scalar-Plain">application</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">test</span>
+<span class="l-Scalar-Plain">version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1</span>
+<span class="l-Scalar-Plain">runtime</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">python27</span>
+<span class="l-Scalar-Plain">api_version</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">1</span>
+<span class="l-Scalar-Plain">threadsafe</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">true</span>
+
+
+<span class="l-Scalar-Plain">handlers</span><span class="p-Indicator">:</span>
+
+<span class="c1"># Toto mapuje ikonku /favicon.ico do adresare s tematem, kde ji mam umistenou.</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/favicon\.ico</span>
+  <span class="l-Scalar-Plain">static_files</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">output/theme/images/favicon.ico</span>
+  <span class="l-Scalar-Plain">upload</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">output/theme/images/favicon\.ico</span>
+
+<span class="c1"># Toto je namapování kořene na index.html</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/</span>
+  <span class="l-Scalar-Plain">static_files</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">output/index.html</span>
+  <span class="l-Scalar-Plain">upload</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">output/index.html</span>
+
+<span class="c1"># Toto mapuje url do adresare output.</span>
+<span class="c1"># Pr. URL http://www.smita.info/bagr.html namapuje na output/bagr.html</span>
+<span class="p-Indicator">-</span> <span class="l-Scalar-Plain">url</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">/</span>
+  <span class="l-Scalar-Plain">static_dir</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">output</span>
+</pre></div>
+
+
+<p>Parametr <code>upload</code> říká, že se při nasazení na servery Googlu má tento soubor též přenést.</p>                </article>
+<p class="paginator">
+    Page 1 / 1
+</p>
+            </aside><!-- /#featured -->
+        <section id="extras" class="body">
+                <div class="blogroll">
+                        <h2>blogroll</h2>
+                        <ul>
+                            <li><a href="http://bultas.info/">Daniel Bultas</a></li>
+                        </ul>
+                </div><!-- /.blogroll -->
+                <div class="social">
+                        <h2>social</h2>
+                        <ul>
+                            <li><a href="http://www.smita.info/feeds/all.atom.xml" type="application/atom+xml" rel="alternate">atom feed</a></li>
+
+                            <li><a href="http://twitter.com/jindrichsmitka">Twitter</a></li>
+                            <li><a href="https://plus.google.com/105092425314734561226">Google+</a></li>
+                            <li><a href="https://github.com/s-m-i-t-a">Github</a></li>
+                            <li><a href="https://bitbucket.org/jsmitka">Bitbucket</a></li>
+                        </ul>
+                </div><!-- /.social -->
+        </section><!-- /#extras -->
+
+        <footer id="contentinfo" class="body">
+                <address id="about" class="vcard body">
+                Proudly powered by <a href="http://getpelican.com/">Pelican</a>, which takes great advantage of <a href="http://python.org">Python</a>.
+                </address><!-- /#about -->
+
+                <p>The theme is by <a href="http://coding.smashingmagazine.com/2009/08/04/designing-a-html-5-layout-from-scratch/">Smashing Magazine</a>, thanks!</p>
+        </footer><!-- /#contentinfo -->
+
+    <script type="text/javascript">
+    var _gaq = _gaq || [];
+    _gaq.push(['_setAccount', 'UA-22752857-1']);
+    _gaq.push(['_trackPageview']);
+    (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+    })();
+    </script>
+</body>
+</html>

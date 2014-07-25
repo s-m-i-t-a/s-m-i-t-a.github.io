@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Jindřich Smitka</title><link href="http://www.smita.info/" rel="alternate"></link><link href="http://www.smita.info/feeds/blog.atom.xml" rel="self"></link><id>http://www.smita.info/</id><updated>2012-09-26T00:00:00+02:00</updated><entry><title>Blog za pomoci Pelicanu</title><link href="http://www.smita.info/blog-za-pomoci-pelicanu.html" rel="alternate"></link><updated>2012-09-26T00:00:00+02:00</updated><author><name>Jindřich Smitka</name></author><id>tag:www.smita.info,2012-09-26:blog-za-pomoci-pelicanu.html</id><summary type="html">&lt;p&gt;Dlouho zela moje doména prázdnotou a já psal poznámky různě po papírech, což stačilo do doby, než jsem zapomněl, kde vlastně ty potřebné papíry mám. Proto padlo rozhodnutí, vytvářet poznámky na počítači.&lt;/p&gt;
+&lt;p&gt;Rozhodnutí v čem a jak psát bylo těžké, ať už řešení, která dnešní web nabízí nebo vlastní výroba blogu, ale spíše to bylo nalézání slepých uliček.&lt;/p&gt;
+&lt;p&gt;Tyto uličky mě dovedly k tomu, co pro tvorbu poznámek požaduji:&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;musí běžet na &lt;a href="https://developers.google.com/appengine/"&gt;Google App Engine,&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;musí být nejlépe napsané v &lt;a href="http://www.python.org"&gt;Pythonu&lt;/a&gt; s podporou pluginů,&lt;/li&gt;
+&lt;li&gt;psát na svém notebooku,&lt;/li&gt;
+&lt;li&gt;psát ve &lt;a href="http://www.vim.org/"&gt;Vimu,&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;psát &lt;a href="http://daringfireball.net/projects/markdown/"&gt;Markdown,&lt;/a&gt;&lt;/li&gt;
+&lt;li&gt;mít blog verzovaný &lt;a href="http://git-scm.com/"&gt;Gitem.&lt;/a&gt;&lt;/li&gt;
+&lt;/ul&gt;
+&lt;p&gt;Po chvilce hledání na netu jsem narazil na generátor &lt;a href="http://docs.getpelican.com" title="Pelican is a static site generator, written in Python."&gt;Pelican&lt;/a&gt;, který splnil mé požadavky.&lt;/p&gt;
+&lt;p&gt;Uvádím zde jen nastavení pro Google App Engine, &lt;a href="http://docs.getpelican.com/en/3.0/getting_started.html#installing-pelican"&gt;instalaci Pelicanu&lt;/a&gt; najdete v jeho dokumentaci.&lt;/p&gt;
+&lt;h3&gt;Pelican a Google App Engine&lt;/h3&gt;
+&lt;p&gt;&lt;em&gt;Pelican&lt;/em&gt; mám nastavený tak, aby výstup uložil do adresáře &lt;code&gt;output&lt;/code&gt; v kořenu repozitáře. GAE potřebuje vědět, kde má vzít patřičné stránky, proto přidáme pár řádek do &lt;code&gt;app.yaml&lt;/code&gt; do sekce &lt;code&gt;handlers.&lt;/code&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span class="l-Scalar-Plain"&gt;application&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;test&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;version&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;1&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;runtime&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;python27&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;api_version&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;1&lt;/span&gt;
+&lt;span class="l-Scalar-Plain"&gt;threadsafe&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;true&lt;/span&gt;
+
+
+&lt;span class="l-Scalar-Plain"&gt;handlers&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Toto mapuje ikonku /favicon.ico do adresare s tematem, kde ji mam umistenou.&lt;/span&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;url&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;/favicon\.ico&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;static_files&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;output/theme/images/favicon.ico&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;upload&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;output/theme/images/favicon\.ico&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Toto je namapování kořene na index.html&lt;/span&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;url&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;/&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;static_files&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;output/index.html&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;upload&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;output/index.html&lt;/span&gt;
+
+&lt;span class="c1"&gt;# Toto mapuje url do adresare output.&lt;/span&gt;
+&lt;span class="c1"&gt;# Pr. URL http://www.smita.info/bagr.html namapuje na output/bagr.html&lt;/span&gt;
+&lt;span class="p-Indicator"&gt;-&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;url&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;/&lt;/span&gt;
+  &lt;span class="l-Scalar-Plain"&gt;static_dir&lt;/span&gt;&lt;span class="p-Indicator"&gt;:&lt;/span&gt; &lt;span class="l-Scalar-Plain"&gt;output&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+
+
+&lt;p&gt;Parametr &lt;code&gt;upload&lt;/code&gt; říká, že se při nasazení na servery Googlu má tento soubor též přenést.&lt;/p&gt;</summary><category term="blog"></category><category term="python"></category><category term="pelican"></category></entry></feed>
