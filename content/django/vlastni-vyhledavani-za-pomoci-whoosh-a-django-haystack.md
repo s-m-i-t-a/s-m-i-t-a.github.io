@@ -1,0 +1,3 @@
+title: Vlastní vyhledávání...
+tags: django, whoosh, haystack, search, python
+status: draft
